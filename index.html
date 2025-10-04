@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Family Spending Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0ea5e9" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Family Spending Tracker</h1>
+    <div class="actions">
+      <button id="btn-export" class="btn">Export</button>
+      <label class="btn btn-secondary">
+        Import <input id="input-import" type="file" accept="application/json" hidden />
+      </label>
+      <button id="btn-install" class="btn btn-secondary" hidden>Install App</button>
+    </div>
+  </header>
+
+ <nav class="tabs">
+  <button data-tab="users" class="active">Members & Categories</button>
+  <button data-tab="spending">Log Spending</button>
+  <button data-tab="report">Reports</button>
+</nav>
+
+  <main>
+    <section id="tab-users" class="tab active">
+      <h2>Family Members</h2>
+      <form id="form-member" class="row gap">
+        <input id="member-name" placeholder="Add member name" required />
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <ul id="member-list" class="list"></ul>
+
+      <h2>Categories</h2>
+      <form id="form-category" class="row gap">
+        <input id="category-name" placeholder="Add category (e.g., Grocery)" required />
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <ul id="category-list" class="list"></ul>
+    </section>
+
+    <section id="tab-spending" class="tab">
+      <h2>Add Expense</h2>
+      <form id="form-expense" class="grid">
+        <label><span>Date</span><input id="exp-date" type="date" required /></label>
+        <label><span>Member</span><select id="exp-member" required></select></label>
+        <label><span>Amount</span><input id="exp-amount" type="number" min="0" step="0.01" required /></label>
+        <label><span>Category</span><select id="exp-category" required></select></label>
+        <label><span>Payment</span><select id="exp-payment" required>
+          <option>Cash</option><option>UPI</option><option>Debit Card</option><option>Credit Card</option>
+        </select></label>
+        <label class="col-2"><span>Note</span><input id="exp-note" placeholder="optional" /></label>
+        <div class="col-2 right"><button class="btn" type="submit">Save Expense</button></div>
+      </form>
+    </section>
+
+<section id="tab-report" class="tab">
+  <h2>Reports</h2>
+
+  <nav class="subtabs">
+    <button data-subtab="overall" class="active">Overall</button>
+    <button data-subtab="detailed">Detailed</button>
+  </nav>
+
+  <!-- Overall subtab -->
+  <div id="subtab-overall" class="subtab active">
+    <div class="row gap center">
+      <label>From <input type="date" id="filter-from-overall"/></label>
+      <label>To <input type="date" id="filter-to-overall"/></label>
+      <select id="filter-member-overall" class="sm"></select>
+      <select id="filter-category-overall" class="sm"></select>
+      <select id="filter-payment-overall" class="sm">
+        <option value="">All Payments</option>
+        <option>Cash</option><option>UPI</option>
+        <option>Debit Card</option><option>Credit Card</option>
+      </select>
+      <button id="btn-apply-overall" class="btn btn-secondary">Apply</button>
+      <button id="btn-reset-overall" class="btn btn-ghost">Reset</button>
+    </div>
+    <div class="totals" id="totals-overall"></div>
+  </div>
+
+  <!-- Detailed subtab -->
+  <div id="subtab-detailed" class="subtab">
+    <div class="row gap center">
+      <label>From <input type="date" id="filter-from-detailed"/></label>
+      <label>To <input type="date" id="filter-to-detailed"/></label>
+      <select id="filter-member-detailed" class="sm"></select>
+      <select id="filter-category-detailed" class="sm"></select>
+      <select id="filter-payment-detailed" class="sm">
+        <option value="">All Payments</option>
+        <option>Cash</option><option>UPI</option>
+        <option>Debit Card</option><option>Credit Card</option>
+      </select>
+      <button id="btn-apply-detailed" class="btn btn-secondary">Apply</button>
+      <button id="btn-reset-detailed" class="btn btn-ghost">Reset</button>
+    </div>
+    <table class="table" id="tx-table">
+      <thead>
+        <tr><th>Date</th><th>Member</th><th>Category</th><th>Payment</th><th class="right">Amount</th><th>Note</th><th></th></tr>
+      </thead>
+      <tbody id="tx-body"></tbody>
+    </table>
+  </div>
+</section>
+
+
+  </main>
+
+  <footer class="app-footer">Offline‑first • Your data stays on your device • PWA installable</footer>
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

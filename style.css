@@ -1,0 +1,140 @@
+/* existing styles + tabbed UI */
+:root{--bg:#0b1220;--panel:#0f172a;--card:#111827;--muted:#94a3b8;--acc:#0ea5e9;--ok:#10b981;--danger:#ef4444}
+*{box-sizing:border-box}body{margin:0;font:14px/1.4 system-ui,Segoe UI,Roboto,Helvetica,Arial;color:#e5e7eb;background:var(--bg)}
+.app-header,.app-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--panel);position:sticky;top:0;z-index:10}
+.app-footer{top:auto;bottom:0;opacity:.75}
+.actions{display:flex;gap:8px;align-items:center}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:12px;padding:12px}
+.panel{background:var(--panel);border:1px solid #1f2937;border-radius:14px;padding:12px}
+.grow{min-height:70vh}
+h1,h2{margin:.2rem 0 1rem}
+.row{display:flex;align-items:center}
+.gap{gap:8px}
+.center{justify-content:flex-start}
+.right{display:flex;justify-content:flex-end}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.col-2{grid-column:span 2}
+.list{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:240px;overflow:auto}
+.list li{display:flex;justify-content:space-between;align-items:center;background:#0b1324;padding:8px;border:1px solid #1f2937;border-radius:10px}
+.list .muted{color:var(--muted)}
+input,select{width:100%;padding:8px;border-radius:10px;border:1px solid #1f2937;background:#0b1324;color:#e5e7eb}
+.btn{background:var(--acc);border:none;color:white;padding:8px 12px;border-radius:10px;cursor:pointer}
+.btn:hover{filter:brightness(1.05)}
+.btn-secondary{background:#334155}
+.btn-ghost{background:transparent;border:1px solid #334155}
+.table{width:100%;border-collapse:separate;border-spacing:0 6px;margin-top:10px}
+.table th,.table td{padding:10px;background:#0b1324;border-top:1px solid #1f2937;border-bottom:1px solid #1f2937}
+.table th:first-child,.table td:first-child{border-left:1px solid #1f2937;border-top-left-radius:10px;border-bottom-left-radius:10px}
+.table th:last-child,.table td:last-child{border-right:1px solid #1f2937;border-top-right-radius:10px;border-bottom-right-radius:10px}
+.table .right{text-align:right}
+.badge{padding:2px 8px;border-radius:999px;background:#1f2937;border:1px solid #334155}
+.kicker{font-size:12px;color:var(--muted)}
+.totals{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0}
+.totals .card{background:var(--card);border:1px solid #1f2937;border-radius:12px;padding:10px 12px}
+.icon-btn{background:transparent;border:0;color:#93c5fd;cursor:pointer}
+.icon-btn:hover{color:white}
+hr{border:0;border-top:1px solid #1f2937;margin:10px 0}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.panel{order:2}.panel:first-child{order:1}}
+
+.tabs{display:flex;gap:6px;padding:8px;background:#0f172a}
+.tabs button{flex:1;padding:10px;border:none;border-radius:8px;background:#1e293b;color:#e5e7eb;cursor:pointer}
+.tabs button.active{background:#0ea5e9;color:white}
+.tab{display:none;}
+.tab.active { display: block; }
+
+form.grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+form.grid label span {
+  font-size: 12px;
+  color: var(--muted);
+}
+#tab-report .row {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#tab-report label, 
+#tab-report select, 
+#tab-report button {
+  flex: 1 1 150px;  /* grow but keep min width */
+}
+#tx-table th:nth-child(1),
+#tx-table td:nth-child(1) { width: 100px; }
+#tx-table th:nth-child(2),
+#tx-table td:nth-child(2) { width: 120px; }
+#tx-table th:nth-child(3),
+#tx-table td:nth-child(3) { width: 120px; }
+#tx-table th:nth-child(4),
+#tx-table td:nth-child(4) { width: 120px; }
+#tx-table th:nth-child(5),
+#tx-table td:nth-child(5) { width: 100px; text-align: right; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* stop full-page scroll */
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 1 auto;
+  overflow: hidden; /* contain scrolling inside tabs */
+  display: flex;
+  flex-direction: column;
+}
+
+.tab {
+  display: none;
+  flex: 1 1 auto;
+  overflow: auto; /* each tab scrolls internally */
+  padding: 16px;
+}
+.tab.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reports tab specifically */
+#tab-report {
+  overflow: hidden;
+}
+#tab-report .totals {
+  flex: 0 0 auto;
+}
+#tab-report .table {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: block;
+}
+#tab-report thead {
+  position: sticky;
+  top: 0;
+  background: #0f172a;
+  z-index: 2;
+}
+.subtabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.subtabs button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #1e293b;
+  color: #e5e7eb;
+  cursor: pointer;
+}
+.subtabs button.active {
+  background: #0ea5e9;
+  color: white;
+}
+.subtab { display: none; flex: 1 1 auto; overflow: auto; }
+.subtab.active { display: block; }
+
+
+
