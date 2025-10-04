@@ -67,10 +67,34 @@ const fPaymentDetailed=qs('#filter-payment-detailed');
 const btnApplyDetailed=qs('#btn-apply-detailed');
 const btnResetDetailed=qs('#btn-reset-detailed');
 
-const todayStr = new Date().toISOString().slice(0,10);
-expDate.value = todayStr;
-fFromOverall.value = fToOverall.value = todayStr;
-fFromDetailed.value = fToDetailed.value = todayStr;
+function formatDateLocal(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+// Default report range = current month
+const now = new Date();
+
+// First day of current month
+const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+
+// Last day of current month
+const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+// Format safely in local timezone
+const startStr = formatDateLocal(firstDay);
+const endStr   = formatDateLocal(lastDay);
+
+// Set defaults
+expDate.value = formatDateLocal(now);
+
+fFromOverall.value = startStr;
+fToOverall.value   = endStr;
+fFromDetailed.value = startStr;
+fToDetailed.value   = endStr;
+
 
 // Load lists
 async function refreshMembers(){
